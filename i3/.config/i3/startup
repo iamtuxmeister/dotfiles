@@ -1,0 +1,8 @@
+#!/usr/bin/bash
+/usr/bin/setxkbmap -option "ctrl:nocaps"
+#~/.screenlayout/def.sh
+picom --config ~/.config/i3/picom.conf &
+xbanish -i shift -i ctrl -i mod1 -i mod4 &
+sleep 1
+nitrogen --restore
+kitty --name dropdown --title dropdown tmux -f /etc/tmux/tmux.conf -2 new -s "dropdown" &
