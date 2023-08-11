@@ -33,3 +33,11 @@ export PATH="/home/ks/.turso:$PATH"
 
 
 clear
+
+# pnpm
+export PNPM_HOME="/home/ks/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
