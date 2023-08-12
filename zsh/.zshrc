@@ -1,5 +1,12 @@
 alias clear='clear -x'
 
+
+# ~/.zshrc
+# enable control-s and control-q
+stty start undef
+stty stop undef
+setopt noflowcontrol
+
 #alias cls='clear -x && neofetch --block_range 0 15 --ascii_colors 4 5 --colors 4 7 5 4 5 7'
 alias cls='clear -x && neofetch --block_range 0 15 --colors 4 7 5 4 5 7'
 
