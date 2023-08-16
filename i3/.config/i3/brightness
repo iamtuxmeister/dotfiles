@@ -14,17 +14,17 @@ function send_notification {
     # https://en.wikipedia.org/wiki/Box-drawing_character
     bar=$(seq -s "─" $(($brightness / 5)) | sed 's/[0-9]//g')
     # Send the notification
-    notify-send -i display-brightness-symbolic -t 8 -u normal "    $bar"
+    notify-send " " -i notification-display-brightness-low -h int:value:$brightness -h string:x-canonical-private-synchronous:brightness &
 }
 
 case $1 in
     up)
 	# Set the brightness on
     sudo light -A 10
-#	send_notification
+	send_notification
 	;;
     down)
     sudo light -U 10
-#	send_notification
+	send_notification
 	;;
 esac

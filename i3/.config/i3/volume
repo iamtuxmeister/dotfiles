@@ -6,7 +6,7 @@
 # $./volume.sh mute
 
 function get_volume {
-    amixer get Master | grep '%' | head -n 1 | cut -d '[' -f 2 | cut -d '%' -f 1
+    pactl get-sink-volume $(pactl info | grep -i Sink | cut -d ':' -f2) | cut -d\% -f1 | cut -d\/ -f2 | awk '{print $1}' | egrep -x -E '[[:digit:]]+'
 }
 
 function is_mute {
@@ -19,22 +19,29 @@ function send_notification {
     # https://en.wikipedia.org/wiki/Box-drawing_character
     bar=$(seq -s "─" $(($volume / 5)) | sed 's/[0-9]//g')
     # Send the notification
-    notify-send -i audio-volume-medium -t 8 -u normal "    $bar"
+#    notify-send -i audio-volume-medium -t 150 -u normal "    $bar"
+    notify-send " " -i audio-volume-medium -h int:value:$volume -h string:x-canonical-private-synchronous:volume &
 }
 
 case $1 in
     up)
-	# Set the volume on (if it was muted)
-	amixer sset Master on > /dev/null
-	# Up the volume (+ 5%)
-	amixer sset Master 5%+ > /dev/null
+	volume=`get_volume`
+	if [ $volume -lt 100 ]
+	then
+	    pactl set-sink-volume $(pactl info | grep -i Sink | cut -d ':' -f2) +5%
+	    send_notification
+	fi
 	;;
     down)
-	amixer sset Master on > /dev/null
-	amixer sset Master 5%- > /dev/null
+	volume=`get_volume`
+	if [ $volume -gt 0 ]
+	then
+	    pactl set-sink-volume $(pactl info | grep -i Sink | cut -d ':' -f2) -5%
+	    send_notification
+	fi
 	;;
     mute)
     	# Toggle mute
-	amixer sset Master 1+ toggle > /dev/null
+	pactl set-sink-mute $(pactl info | grep -i Sink | cut -d ':' -f2) toggle
 	;;
 esac
