@@ -21,10 +21,10 @@ case $1 in
     up)
 	# Set the brightness on
     sudo light -A 10
-	send_notification
+#	send_notification
 	;;
     down)
     sudo light -U 10
-	send_notification
+#	send_notification
 	;;
 esac
