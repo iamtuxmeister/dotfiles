@@ -543,13 +543,17 @@ vim.keymap.set({ "n", "i", "v" }, "<C-s>", "<ESC>:lua vim.lsp.buf.format()<cr><E
 
 
 -- Harpoon
-vim.keymap.set('n', '<C-a>', require("harpoon.mark").add_file, { desc = 'Harpoon Mark' })
+vim.keymap.set('n', '<C-h>', require("harpoon.mark").add_file, { desc = 'Harpoon Mark' })
 vim.keymap.set('n', '<C-m>', require("harpoon.ui").toggle_quick_menu, { desc = 'Harpoon Quick Menu' })
-vim.keymap.set('n', '<C-h>', function() require("harpoon.ui").nav_file(1) end, { desc = 'Harpoon File 1' })
-vim.keymap.set('n', '<C-j>', function() require("harpoon.ui").nav_file(2) end, { desc = 'Harpoon File 2' })
-vim.keymap.set('n', '<C-k>', function() require("harpoon.ui").nav_file(3) end, { desc = 'Harpoon File 3' })
-vim.keymap.set('n', '<C-l>', function() require("harpoon.ui").nav_file(4) end, { desc = 'Harpoon File 4' })
+vim.keymap.set('n', '<C-j>', function() require("harpoon.ui").nav_file(1) end, { desc = 'Harpoon File 1' })
+vim.keymap.set('n', '<C-k>', function() require("harpoon.ui").nav_file(2) end, { desc = 'Harpoon File 2' })
+vim.keymap.set('n', '<C-l>', function() require("harpoon.ui").nav_file(3) end, { desc = 'Harpoon File 3' })
+vim.keymap.set('n', '<C-;>', function() require("harpoon.ui").nav_file(4) end, { desc = 'Harpoon File 4' })
 
+
+-- Drag Visual selection with JK
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 -- Paste over selection without yank
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = 'Paste without yank' })
