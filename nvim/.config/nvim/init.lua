@@ -1,5 +1,4 @@
 --[[
-
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
@@ -86,7 +85,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+      { 'j-hui/fidget.nvim',       tag = 'legacy', opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -109,7 +108,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -123,21 +122,22 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
       on_attach = function(bufnr)
-        vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk, { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
+        vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk,
+          { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
         vim.keymap.set('n', '<leader>gn', require('gitsigns').next_hunk, { buffer = bufnr, desc = '[G]o to [N]ext Hunk' })
         vim.keymap.set('n', '<leader>ph', require('gitsigns').preview_hunk, { buffer = bufnr, desc = '[P]review [H]unk' })
       end,
     },
   },
 
---  {
---    -- Theme inspired by Atom
---    'navarasu/onedark.nvim',
---    priority = 1000,
---    config = function()
---      vim.cmd.colorscheme 'onedark'
---    end,
---  },
+  --  {
+  --    -- Theme inspired by Atom
+  --    'navarasu/onedark.nvim',
+  --    priority = 1000,
+  --    config = function()
+  --      vim.cmd.colorscheme 'onedark'
+  --    end,
+  --  },
   {
     "folke/tokyonight.nvim",
     lazy = false,
@@ -219,6 +219,12 @@ require('lazy').setup({
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
+  'ThePrimeagen/harpoon',
+  {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    opts = {} -- this is equalent to setup({}) function
+  },
 }, {})
 
 -- [[ Setting options ]]
@@ -230,6 +236,7 @@ vim.o.hlsearch = false
 
 -- Make line numbers default
 vim.wo.number = true
+vim.wo.relativenumber = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -530,6 +537,19 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+-- This is better save and format
+vim.keymap.set({ "n", "i", "v" }, "<C-s>", "<ESC>:lua vim.lsp.buf.format()<cr><ESC>:w<CR>")
+
+
+-- Harpoon
+vim.keymap.set('n', '<C-a>', require("harpoon.mark").add_file, { desc = 'Harpoon Mark' })
+vim.keymap.set('n', '<C-m>', require("harpoon.ui").toggle_quick_menu, { desc = 'Harpoon Quick Menu' })
+vim.keymap.set('n', '<C-h>', function() require("harpoon.ui").nav_file(1) end, { desc = 'Harpoon File 1' })
+vim.keymap.set('n', '<C-j>', function() require("harpoon.ui").nav_file(2) end, { desc = 'Harpoon File 2' })
+vim.keymap.set('n', '<C-k>', function() require("harpoon.ui").nav_file(3) end, { desc = 'Harpoon File 3' })
+vim.keymap.set('n', '<C-l>', function() require("harpoon.ui").nav_file(4) end, { desc = 'Harpoon File 4' })
+
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
