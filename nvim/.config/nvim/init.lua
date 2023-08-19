@@ -551,5 +551,17 @@ vim.keymap.set('n', '<C-k>', function() require("harpoon.ui").nav_file(3) end, {
 vim.keymap.set('n', '<C-l>', function() require("harpoon.ui").nav_file(4) end, { desc = 'Harpoon File 4' })
 
 
+-- Paste over selection without yank
+vim.keymap.set("x", "<leader>p", [["_dP]], { desc = 'Paste without yank' })
+
+-- next greatest remap ever : asbjornHaland
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
+vim.keymap.set("n", "<leader>Y", [["+Y]])
+
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
+
+
+
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
