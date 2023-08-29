@@ -225,6 +225,7 @@ require('lazy').setup({
     event = "InsertEnter",
     opts = {} -- this is equalent to setup({}) function
   },
+  'hiphish/rainbow-delimiters.nvim'
 }, {})
 
 -- [[ Setting options ]]
@@ -424,8 +425,8 @@ local on_attach = function(_, bufnr)
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
   -- See `:help K` for why this keymap
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  nmap('G', vim.lsp.buf.hover, 'Hover Documentation')
+  nmap('<C-g>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -543,12 +544,12 @@ vim.keymap.set({ "n", "i", "v" }, "<C-s>", "<ESC>:lua vim.lsp.buf.format()<cr><E
 
 
 -- Harpoon
-vim.keymap.set('n', '<C-h>', require("harpoon.mark").add_file, { desc = 'Harpoon Mark' })
+vim.keymap.set('n', '<C-n>', require("harpoon.mark").add_file, { desc = 'Harpoon Mark' })
 vim.keymap.set('n', '<C-m>', require("harpoon.ui").toggle_quick_menu, { desc = 'Harpoon Quick Menu' })
-vim.keymap.set('n', '<C-j>', function() require("harpoon.ui").nav_file(1) end, { desc = 'Harpoon File 1' })
-vim.keymap.set('n', '<C-k>', function() require("harpoon.ui").nav_file(2) end, { desc = 'Harpoon File 2' })
-vim.keymap.set('n', '<C-l>', function() require("harpoon.ui").nav_file(3) end, { desc = 'Harpoon File 3' })
-vim.keymap.set('n', '<C-;>', function() require("harpoon.ui").nav_file(4) end, { desc = 'Harpoon File 4' })
+vim.keymap.set('n', '<C-h>', function() require("harpoon.ui").nav_file(1) end, { desc = 'Harpoon File 1' })
+vim.keymap.set('n', '<C-j>', function() require("harpoon.ui").nav_file(2) end, { desc = 'Harpoon File 2' })
+vim.keymap.set('n', '<C-k>', function() require("harpoon.ui").nav_file(3) end, { desc = 'Harpoon File 3' })
+vim.keymap.set('n', '<C-l>', function() require("harpoon.ui").nav_file(4) end, { desc = 'Harpoon File 4' })
 
 
 -- Drag Visual selection with JK
@@ -565,6 +566,30 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 
+
+
+-- This module contains a number of default definitions
+local rainbow_delimiters = require 'rainbow-delimiters'
+
+vim.g.rainbow_delimiters = {
+    strategy = {
+        [''] = rainbow_delimiters.strategy['global'],
+        vim = rainbow_delimiters.strategy['local'],
+    },
+    query = {
+        [''] = 'rainbow-delimiters',
+        lua = 'rainbow-blocks',
+    },
+    highlight = {
+        'RainbowDelimiterRed',
+        'RainbowDelimiterYellow',
+        'RainbowDelimiterBlue',
+        'RainbowDelimiterOrange',
+        'RainbowDelimiterGreen',
+        'RainbowDelimiterViolet',
+        'RainbowDelimiterCyan',
+    },
+}
 
 
 -- The line beneath this is called `modeline`. See `:help modeline`
