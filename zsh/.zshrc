@@ -18,9 +18,9 @@ plugins=(git)
 
 source $ZSH/zsh.sh
 
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-eval "$(dircolors)"
+eval "$(gdircolors)"
 alias ls='ls --color'
 alias vi='nvim'
 
@@ -30,9 +30,13 @@ PATH=~/.cargo/bin:$PATH
 PATH=~/.local/share/pnpm:$PATH
 PATH=/usr/local/go/bin:$PATH
 PATH=~/go/bin:$PATH
+PATH=~/flutter/bin:$PATH
+PATH=~/.pub_cache/bin:$PATH
 
 # Turso
 export PATH="/home/ks/.turso:$PATH"
+
+PATH=$PATH:~/.cache/rebar3/bin
 
 # opam configuration
 [[ ! -r /home/ks/.opam/opam-init/init.zsh ]] || source /home/ks/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
@@ -54,5 +58,9 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+#export SDKMAN_DIR="$HOME/.sdkman"
+#[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

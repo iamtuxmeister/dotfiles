@@ -9,7 +9,7 @@ config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
 
 config.font = wezterm.font('FiraCode Nerd Font Mono')
-config.font_size = 10.0
+config.font_size = 13.0
 
 wezterm.on('update-right-status', function(window, pane)
   local name = window:active_key_table()
