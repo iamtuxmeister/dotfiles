@@ -1,0 +1,57 @@
+{
+    "profiles": [
+        {
+            "devices": [
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 832,
+                        "vendor_id": 1452
+                    },
+                    "simple_modifications": [
+                        {
+                            "from": { "key_code": "caps_lock" },
+                            "to": [{ "key_code": "left_control" }]
+                        }
+                    ]
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 865,
+                        "vendor_id": 10730
+                    },
+                    "simple_modifications": [
+                        {
+                            "from": { "key_code": "f22" },
+                            "to": [{ "apple_vendor_keyboard_key_code": "brightness_up" }]
+                        },
+                        {
+                            "from": { "key_code": "f23" },
+                            "to": [{ "apple_vendor_keyboard_key_code": "brightness_down" }]
+                        }
+                    ]
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 864,
+                        "vendor_id": 10730
+                    },
+                    "simple_modifications": [
+                        {
+                            "from": { "key_code": "f22" },
+                            "to": [{ "consumer_key_code": "display_brightness_increment" }]
+                        },
+                        {
+                            "from": { "key_code": "f23" },
+                            "to": [{ "consumer_key_code": "display_brightness_decrement" }]
+                        }
+                    ]
+                }
+            ],
+            "name": "Default profile",
+            "selected": true
+        }
+    ]
+}

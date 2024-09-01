@@ -32,6 +32,7 @@ PATH=/usr/local/go/bin:$PATH
 PATH=~/go/bin:$PATH
 PATH=~/flutter/bin:$PATH
 PATH=~/.pub_cache/bin:$PATH
+PATH=~/.asdf/shims:$PATH
 
 # Turso
 export PATH="/home/ks/.turso:$PATH"
@@ -56,6 +57,7 @@ esac
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 
+export PATH=/usr/local/opt/openjdk/bin:$PATH
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 #export SDKMAN_DIR="$HOME/.sdkman"
