@@ -44,6 +44,8 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 eval "$(starship init zsh)"
 PATH=/opt/nvim-linux64/bin:$PATH
+PATH=/opt/go/bin:$PATH
+PATH=~/go/bin:$PATH
 PATH=~/bin:$PATH
 
 # Cycle through history based on characters already typed on the line
@@ -62,3 +64,11 @@ alias vi='nvim'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# pnpm
+export PNPM_HOME="/home/ks/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
