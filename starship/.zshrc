@@ -1,5 +1,7 @@
 # Set up the prompt
 
+alias clear='clear -x'
+
 setopt histignorealldups sharehistory
 
 # Use emacs keybindings even if our EDITOR is set to vi
@@ -44,9 +46,13 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 eval "$(starship init zsh)"
 PATH=/opt/nvim-linux64/bin:$PATH
-PATH=/opt/go/bin:$PATH
-PATH=~/go/bin:$PATH
+PATH=/opt/flutter/bin:$PATH
+PATH=~/android-studio/bin:$PATH
+PATH=/usr/local/go/bin:/opt/go/bin:~/go/bin:~/.local/go/bin:$PATH
 PATH=~/bin:$PATH
+
+
+GOPATH=~/.local/go
 
 # Cycle through history based on characters already typed on the line
 autoload -U up-line-or-beginning-search
@@ -72,3 +78,10 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+# bun completions
+[ -s "/home/ks/.bun/_bun" ] && source "/home/ks/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
