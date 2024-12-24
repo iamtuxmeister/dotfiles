@@ -624,7 +624,7 @@ vim.g.rainbow_delimiters = {
 }
 
 require('sg').setup({
-  node_executable = "/Users/ks/.nvm/versions/node/v20.15.1/bin/node",
+  node_executable = "/home/ks/.nvm/versions/node/v22.11.0/bin/node",
   chat = {
     default_model = "anthropic/claude-3-5-sonnet-20240620"
   }
