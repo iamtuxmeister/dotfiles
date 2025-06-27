@@ -22,6 +22,7 @@
     wezterm
     starship
     neovim
+    rofi
     nerd-fonts.fira-code
   ];
 
