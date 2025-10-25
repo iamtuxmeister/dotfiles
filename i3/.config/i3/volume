@@ -10,17 +10,20 @@ function get_volume {
 }
 
 function is_mute {
-    amixer get Master | grep '%' | grep -oE '[^ ]+$' | grep off > /dev/null
+    pactl get-sink-mute $(pactl info | grep -i Sink | cut -d ':' -f2) | awk {'print $2'}
 }
 
 function send_notification {
     volume=`get_volume`
     # Make the bar with the special character ─ (it's not dash -)
     # https://en.wikipedia.org/wiki/Box-drawing_character
-    bar=$(seq -s "─" $(($volume / 5)) | sed 's/[0-9]//g')
+    # bar=$(seq -s "─" $(($volume / 5)) | sed 's/[0-9]//g')
     # Send the notification
-#    notify-send -i audio-volume-medium -t 150 -u normal "    $bar"
+    # notify-send -i audio-volume-medium -t 150 -u normal "    $bar"
     notify-send " " -i audio-volume-medium -h int:value:$volume -h string:x-canonical-private-synchronous:volume &
+}
+function send_mute {
+    notify-send " " -i audio-volume-muted -h int:value:0 -h string:x-canonical-private-synchronous:volume &
 }
 
 case $1 in
@@ -28,7 +31,7 @@ case $1 in
 	volume=`get_volume`
 	if [ $volume -lt 100 ]
 	then
-	    pactl set-sink-volume $(pactl info | grep -i Sink | cut -d ':' -f2) +5%
+	    pactl set-sink-volume $(pactl info | grep -i Sink | cut -d ':' -f2) +7%
 	    send_notification
 	fi
 	;;
@@ -36,12 +39,20 @@ case $1 in
 	volume=`get_volume`
 	if [ $volume -gt 0 ]
 	then
-	    pactl set-sink-volume $(pactl info | grep -i Sink | cut -d ':' -f2) -5%
+	    pactl set-sink-volume $(pactl info | grep -i Sink | cut -d ':' -f2) -7%
 	    send_notification
 	fi
 	;;
     mute)
     	# Toggle mute
 	pactl set-sink-mute $(pactl info | grep -i Sink | cut -d ':' -f2) toggle
+	mute=`is_mute`
+	echo $mute
+	if [ $mute = 'yes' ]
+	then
+	    send_mute
+	else
+	    send_notification
+	fi
 	;;
 esac

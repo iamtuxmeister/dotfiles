@@ -41,6 +41,8 @@ P.S. You can delete this when you're done too. It's your config now :)
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.o.splitright = true
+vim.o.cursorline = true
 
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
@@ -160,6 +162,7 @@ require('lazy').setup({
         theme = 'tokyonight',
         component_separators = '|',
         section_separators = '',
+        disabled_filetypes = { statusline = { 'vpm' } },
       },
     },
   },
@@ -226,10 +229,11 @@ require('lazy').setup({
     opts = {} -- this is equalent to setup({}) function
   },
   'hiphish/rainbow-delimiters.nvim',
-  {
-    "sourcegraph/sg.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-  },
+  'github/copilot.vim',
+  -- {
+  --   "sourcegraph/sg.nvim",
+  --   dependencies = { "nvim-lua/plenary.nvim" },
+  -- },
   {
     "nvim-tree/nvim-tree.lua",
     version = "*",
@@ -249,7 +253,37 @@ require('lazy').setup({
       'stevearc/dressing.nvim', -- optional for vim.ui.select
     },
     config = true,
-  }
+  },
+  -- Conjure!
+  'Olical/conjure',
+
+  -- Structural editing, optional
+  'guns/vim-sexp',
+  'tpope/vim-sexp-mappings-for-regular-people',
+  'tpope/vim-repeat',
+  'tpope/vim-surround',
+  'junegunn/goyo.vim',
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        ocaml = { "ocamlformat" },
+      },
+
+      formatters = {
+        ocamlformat = {
+          prepend_args = {
+            "--if-then-else",
+            "vertical",
+            "--break-cases",
+            "fit-or-vertical",
+            "--type-decl",
+            "sparse",
+          },
+        },
+      },
+    },
+  },
 }, {})
 
 -- [[ Setting options ]]
@@ -322,6 +356,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
+    file_ignore_paterns = { "lib", "include", "node_modules" },
     mappings = {
       i = {
         ['<C-u>'] = false,
@@ -507,19 +542,19 @@ mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
 
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-      filetypes = (servers[server_name] or {}).filetypes,
-    }
-  end
-}
+-- mason_lspconfig.setup_handlers {
+--   function(server_name)
+--     require('lspconfig')[server_name].setup {
+--       capabilities = capabilities,
+--       on_attach = on_attach,
+--       settings = servers[server_name],
+--       filetypes = (servers[server_name] or {}).filetypes,
+--     }
+--   end
+-- }
 
 -- Setup LSP for Gleam
-require('lspconfig').gleam.setup({})
+-- require('lspconfig').gleam.setup({})
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
@@ -564,7 +599,7 @@ cmp.setup {
     end, { 'i', 's' }),
   },
   sources = {
-    { name = 'cody' },
+    { name = 'copilot' },
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
   },
@@ -595,8 +630,8 @@ vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
-vim.keymap.set("n", "<leader>ss", "<ESC>:lua require('sg.extensions.telescope').fuzzy_search_results()<CR>",
-  { desc = 'SourceGraph fuzzy search' })
+--vim.keymap.set("n", "<leader>ss", "<ESC>:lua require('sg.extensions.telescope').fuzzy_search_results()<CR>",
+--  { desc = 'SourceGraph fuzzy search' })
 
 
 
@@ -623,12 +658,12 @@ vim.g.rainbow_delimiters = {
   },
 }
 
-require('sg').setup({
-  node_executable = "/home/ks/.nvm/versions/node/v22.11.0/bin/node",
-  chat = {
-    default_model = "anthropic/claude-3-5-sonnet-20240620"
-  }
-})
+--require('sg').setup({
+--  node_executable = "/home/ks/.nvm/versions/node/v22.15.0/bin/node",
+--  chat = {
+--    default_model = "anthropic/claude-3-5-sonnet-20240620"
+--  }
+--})
 
 
 -- disable netrw at the very start of your init.lua
@@ -639,7 +674,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
 -- empty setup using defaults
-require("nvim-tree").setup()
+-- require("nvim-tree").setup()
 
 -- OR setup with some options
 require("nvim-tree").setup({
@@ -653,11 +688,50 @@ require("nvim-tree").setup({
     group_empty = true,
   },
   filters = {
+    git_ignored = true,
     dotfiles = true,
   },
 })
 
-vim.keymap.set({ "n", "i" }, "<Leader>t", "<ESC>:NvimTreeToggle<cr>", { desc = "Toggle NvimTree" })
+-- Toggle NvimTree
+vim.keymap.set({ "n" }, "<Leader>t", "<ESC>:NvimTreeToggle<cr>", { desc = "Toggle NvimTree" })
+
+
+-- Goyo Presentation Mode
+
+vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+  pattern = { "*.vpm" },
+  callback = function()
+    vim.keymap.set("n", "<Left>", ":silent bp<CR> :redraw!<CR><ESC>")
+    vim.keymap.set("n", "<Right>", ":silent bn<CR> :redraw!<CR><ESC>")
+    vim.keymap.set("n", "<PageUp>", ":silent bp<CR> :redraw!<CR><ESC>")
+    vim.keymap.set("n", "<PageDown>", ":silent bn<CR> :redraw!<CR><ESC>")
+  end,
+
+})
+
+vim.keymap.set("n", "<leader>pm", function()
+  vim.cmd([[Goyo!]])
+  vim.wo.wrap = false
+  vim.wo.number = true
+  vim.wo.rnu = true
+  vim.opt.colorcolumn = "80"
+  vim.opt.cmdheight = 2
+end, { desc = "End Presentation Mode" })
+
+vim.keymap.set("n", "<leader>pM", function()
+  vim.cmd([[Goyo 110]])
+  vim.wo.wrap = false
+  vim.wo.number = false
+  vim.wo.rnu = false
+  vim.opt.colorcolumn = "0"
+  vim.opt.cmdheight = 0
+end, { desc = "Begin Presentation Mode" })
+
+
+-- require('lspconfig').ocamllsp.setup({
+--   on_attach = on_attach,
+-- })
 
 
 -- The line beneath this is called `modeline`. See `:help modeline`

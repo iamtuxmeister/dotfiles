@@ -8,6 +8,8 @@ config.color_scheme = 'Tokyo Night'
 config.tab_bar_at_bottom = true
 config.use_fancy_tab_bar = false
 
+-- config.enable_wayland = false
+
 config.font = wezterm.font('FiraCode Nerd Font Mono')
 config.font_size = 11.0
 

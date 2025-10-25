@@ -45,7 +45,8 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 eval "$(starship init zsh)"
-PATH=/opt/nvim-linux64/bin:$PATH
+PATH=/opt/idea-UI/bin:$PATH
+PATH=/opt/nvim-linux-x86_64/bin:$PATH
 PATH=/opt/flutter/bin:$PATH
 PATH=~/android-studio/bin:$PATH
 PATH=/usr/local/go/bin:/opt/go/bin:~/go/bin:~/.local/go/bin:$PATH
@@ -53,6 +54,10 @@ PATH=~/bin:$PATH
 
 
 GOPATH=~/.local/go
+
+# setup java
+JAVA_HOME=/usr/lib/jvm/default-java
+PATH="$JAVA_HOME/bin:$PATH"
 
 # Cycle through history based on characters already typed on the line
 autoload -U up-line-or-beginning-search
@@ -85,3 +90,22 @@ esac
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH=~/.asdf/shims:$PATH
+
+
+# Erlang rebar3
+export PATH=~/.cache/rebar3/bin:$PATH
+
+
+# Load Angular CLI autocompletion.
+#source <(ng completion script)
+
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+[[ ! -r '/home/ks/.opam/opam-init/init.zsh' ]] || source '/home/ks/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+# END opam configuration
+. "$HOME/.asdf/asdf.sh"

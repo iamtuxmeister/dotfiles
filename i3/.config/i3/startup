@@ -3,6 +3,6 @@
 #~/.screenlayout/def.sh
 picom --config ~/.config/i3/picom.conf &
 xbanish -i shift -i ctrl -i mod1 -i mod4 &
+variety &
 sleep 1
-nitrogen --restore
 kitty --name dropdown --title dropdown tmux -f /etc/tmux/tmux.conf -2 new -s "dropdown" &
