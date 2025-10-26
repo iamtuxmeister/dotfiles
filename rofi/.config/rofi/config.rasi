@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 configuration{
     modi: ["drun", "window", "run"];
     icon-theme: "Papirus-Dark";
@@ -28,6 +27,3 @@ configuration{
     kb-mode-complete: "Control+o";
 }
 @theme "themes/tokyonight.rasi"
-=======
-@theme "./Arc-Dark.rasi"
->>>>>>> 351f28dc445682a0d048914f5cb0730715f722c1
