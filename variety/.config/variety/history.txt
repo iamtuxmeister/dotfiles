@@ -1,0 +1,3 @@
+0
+/home/ks/Pictures/Backgrounds/ubuntu-ce-24.jpg
+/usr/share/backgrounds/pop/kate-hazen-pop-retro1.png
