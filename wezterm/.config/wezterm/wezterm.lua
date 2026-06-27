@@ -38,6 +38,22 @@ config.keys = {
       timeout_milliseconds = 1000,
     },
   },
+  {
+    key = 'P',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action_callback(function(window, pane)
+      local overrides = window:get_config_overrides() or {}
+      
+      -- If Catppuccin is active, switch to Monokai, else switch back
+      if overrides.color_scheme == 'Tokyo Night' then
+        overrides.color_scheme = 'Abernathy'
+      else
+        overrides.color_scheme = 'Tokyo Night'
+      end
+      
+      window:set_config_overrides(overrides)
+    end),
+  },
 }
 
 config.key_tables = {

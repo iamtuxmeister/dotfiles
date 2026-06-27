@@ -108,4 +108,8 @@ export PATH=~/.cache/rebar3/bin:$PATH
 # This section can be safely removed at any time if needed.
 [[ ! -r '/home/ks/.opam/opam-init/init.zsh' ]] || source '/home/ks/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
 # END opam configuration
-. "$HOME/.asdf/asdf.sh"
+#. "$HOME/.asdf/asdf.sh"
+export ANDROID_HOME="/home/ks/Android/Sdk"
+export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
+export PATH=~/dev/flutter/bin:$PATH
+export PATH=~/.local/bin:$PATH
